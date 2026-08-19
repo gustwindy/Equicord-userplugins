@@ -7,6 +7,10 @@ on:
 permissions:
     contents: write
 
+env:
+    GH_TOKEN: ${{ github.token }}
+
+
 jobs:
     Build:
         name: Build Equicord
