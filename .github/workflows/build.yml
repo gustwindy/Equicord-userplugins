@@ -4,12 +4,6 @@ on:
         branches:
             - main
 
-env:
-    FORCE_COLOR: true
-    GITHUB_TOKEN: ${{ secrets.ETOKEN }}
-    REPO: Equicord/Equibored
-    USERNAME: GitHub-Actions
-
 permissions:
     contents: write
 
@@ -71,18 +65,3 @@ jobs:
               if: ${{ vars.ACT == 'false' }}
               run: |
                   gh release upload latest --clobber dist/release/*
-
-            - name: Upload Plugin JSONs to Equibored repo
-              if: github.repository == 'Equicord/Equicord' && vars.ACT == 'false'
-              run: |
-                  git config --global user.name "GitHub-Actions"
-                  git config --global user.email actions@github.com
-                  git clone https://$USERNAME:$GITHUB_TOKEN@github.com/$REPO.git plugins
-                  cd plugins
-
-                  cp ../dist/release/*plugins.json .
-                  cp ../dist/release/devs.json .
-                  git add -A
-
-                  git commit -m "Plugins for https://github.com/$GITHUB_REPOSITORY/commit/$GITHUB_SHA"
-                  git push --force https://$USERNAME:$GITHUB_TOKEN@github.com/$REPO.git
