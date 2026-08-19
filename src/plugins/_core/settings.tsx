@@ -194,7 +194,7 @@ export default definePlugin({
             buildEntry({
                 key: "equicord_main",
                 title: "Equicord",
-                panelTitle: "Equicord Settings",
+                panelTitle: "Equicord (Waftcord Fork) Settings",
                 Component: VencordTab,
                 Icon: MainSettingsIcon
             }),
