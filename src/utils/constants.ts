@@ -675,8 +675,8 @@ export const Devs = /* #__PURE__*/ Object.freeze({
         id: 383365021415243776n
     },
     paige: {
-         name: "paige",
-         id: 1375697625864601650n
+        name: "paige",
+        id: 1375697625864601650n
     },
     jax: {
         name: "jax",
@@ -691,6 +691,13 @@ export const Devs = /* #__PURE__*/ Object.freeze({
         id: 457579346282938368n
     }
 } satisfies Record<string, Dev>);
+
+export const ForkDevs = Object.freeze({
+    windy: {
+        name: "windy",
+        id: 656132997422252042n
+    }
+});
 
 export const EquicordDevs = Object.freeze({
     nobody: {
