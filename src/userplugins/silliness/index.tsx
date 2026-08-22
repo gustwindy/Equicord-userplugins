@@ -37,11 +37,6 @@ const settings = definePluginSettings({
         type: OptionType.NUMBER,
         default: 3,
     },
-    includeUnicodeEmojis: {
-        description: "Should count unicode/default emojis as emojis",
-        type: OptionType.BOOLEAN,
-        default: true
-    },
     toAppend: {
         description: "Text that should append once you fail to send an emote",
         type: OptionType.STRING,
