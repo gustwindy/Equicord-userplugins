@@ -110,9 +110,9 @@ export function PluginCard({ plugin, disabled, onRestartNeeded, onMouseEnter, on
         },
         {
             condition: isUserPlugin,
-            src: "https://equicord.org/assets/icons/misc/userplugin.png",
+            src: "https://raw.githubusercontent.com/gustwindy/Equibop/refs/heads/main/static/tray/tray.png",
             alt: "User",
-            title: "User Plugin"
+            title: "Waftcord Plugin (User Plugin)"
         }
     ];
 
