@@ -16,8 +16,6 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import "./styles.css";
-
 import { definePluginSettings } from "@api/Settings";
 import { ForkDevs } from "@utils/constants";
 import { Logger } from "@utils/Logger";
@@ -34,7 +32,6 @@ const settings = definePluginSettings({
 let rules: Map<string, string> | undefined = undefined;
 let attempted: boolean = false;
 let lastRuleUpdateTime: number = Date.now();
-const logger = new Logger("TextReplaceFromURL");
 
 function updateRules() {
     if (attempted) return;
@@ -49,7 +46,6 @@ function updateRules() {
 }
 
 function ensureRules() {
-    logger.info(lastRuleUpdateTime, rules);
     if (Date.now() - lastRuleUpdateTime > (10 * 60 * 1000) || !rules) {
         updateRules();
         return rules !== undefined;
