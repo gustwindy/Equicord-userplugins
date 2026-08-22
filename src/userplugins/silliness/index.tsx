@@ -16,15 +16,15 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import { showNotification } from "@api/Notifications";
 import "./styles.css";
 
+import { showNotification } from "@api/Notifications";
 import { definePluginSettings } from "@api/Settings";
+import ErrorBoundary from "@components/ErrorBoundary";
 import { ForkDevs } from "@utils/constants";
 import { Logger } from "@utils/Logger";
 import definePlugin, { OptionType } from "@utils/types";
-import ErrorBoundary from "@components/ErrorBoundary";
-//import { useRef } from "@webpack/common";
+// import { useRef } from "@webpack/common";
 
 const settings = definePluginSettings({
     noEmoteThreshold: {
@@ -50,11 +50,12 @@ const settings = definePluginSettings({
 });
 
 const emojiRegex = /(\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff])|(<a?:\w+:\d+>)|:3/gm;
-let messagesSinceEmote: number = 0;
-let currentChatBox: React.RefObject<HTMLDivElement> | null = null;
-let audioRef: { current: HTMLAudioElement | null; } = {
+const audioRef: { current: HTMLAudioElement | null; } = {
     current: null
 };
+let messagesSinceEmote: number = 0;
+let currentChatBox: React.RefObject<HTMLDivElement> | null = null;
+
 const logger = new Logger("Silliness");
 
 export function notify(text: string) {
@@ -71,7 +72,7 @@ function checkMessage(content: string) {
     const audio = audioRef?.current;
 
     current?.classList.toggle("v-guhw-silWarn", messagesSinceEmote >= warningThreshold);
-    if (messagesSinceEmote == noEmoteThreshold - 1) {
+    if (messagesSinceEmote === noEmoteThreshold - 1) {
         notify("you need to send an emote RIGHT NOW");
     }
     if (content.length < 2) return content;
@@ -83,7 +84,7 @@ function checkMessage(content: string) {
             audio.volume = 0.25;
             audio.currentTime = 0;
             audio.play();
-        };
+        }
 
         return content;
     }

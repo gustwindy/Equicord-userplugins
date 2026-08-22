@@ -16,14 +16,13 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import { showNotification } from "@api/Notifications";
 import "./styles.css";
 
 import { definePluginSettings } from "@api/Settings";
+import ErrorBoundary from "@components/ErrorBoundary";
 import { ForkDevs } from "@utils/constants";
 import { Logger } from "@utils/Logger";
 import definePlugin, { OptionType } from "@utils/types";
-import ErrorBoundary from "@components/ErrorBoundary";
 import { useState } from "@webpack/common";
 
 const settings = definePluginSettings({
@@ -67,7 +66,7 @@ function ensureData() {
     if (Date.now() - lastDataUpdateTime > (10 * 60 * 1000) || !taggedData) {
         updateData();
         return taggedData !== undefined;
-    };
+    }
     return true;
 }
 
@@ -123,7 +122,7 @@ function EmojiDisplay() {
 
     return <div className="v-guhw-emDisplay">
         {lastEmoteList.length > 0 ? lastEmoteList.map((v, idx) => {
-            return <EmojiDisplaySlot pasteText={v} index={idx + 1} />;
+            return <EmojiDisplaySlot key={v} pasteText={v} index={idx + 1} />;
         }) : <span>suggestions</span>}
     </div>;
 }
