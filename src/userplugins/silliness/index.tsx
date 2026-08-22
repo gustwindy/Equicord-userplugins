@@ -111,7 +111,6 @@ export default definePlugin({
     },
 
     giveChat(ref: React.RefObject<HTMLDivElement>) {
-        logger.info(ref);
         currentChatBox = ref;
         return ref;
     },
@@ -143,9 +142,6 @@ export default definePlugin({
             }
         }
     ],
-    start() {
-        messagesSinceEmote = settings.store.noEmoteThreshold;
-    },
 
     onBeforeMessageSend(channelId, msg) {
         msg.content = checkMessage(msg.content);
