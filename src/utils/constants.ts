@@ -784,6 +784,10 @@ export const EquicordDevs = Object.freeze({
         name: "Balaclava",
         id: 854886148455399436n
     },
+    tt: {
+        name: "_.tt",
+        id: 497966466617049089n
+    },
     dat_insanity: {
         name: "dat_insanity",
         id: 0n
@@ -1304,10 +1308,6 @@ export const EquicordDevs = Object.freeze({
     korzi: {
         name: "korzi",
         id: 740966310875365416n
-    },
-    davri: {
-        name: "Davri",
-        id: 457579346282938368n
     },
     yash: {
         name: "yash",
