@@ -78,6 +78,7 @@ function checkMessage(content: string) {
     if (content.length < 2) return content;
 
     const hasEmoji = emojiRegex.exec(content) != null;
+    logger.info(hasEmoji, current, messagesSinceEmote);
     if (hasEmoji) {
         messagesSinceEmote = 0;
         if (audio) {
@@ -131,15 +132,15 @@ export default definePlugin({
         {
             find: "ChannelTextAreaForm",
             replacement: {
-                match: /(eN\.Ay,\s*\{.*?className:)(.*?),/,
-                replace: '$1`${$2} ${$self.shouldBeWarned() ? "v-guhw-silWarn" : ""}`,'
+                match: /(\.GUILD_VOICE.*?let.*?className:)(.*?),(.*?className:)(.*?),/, // oh yuck
+                replace: "$1`${$2} ${$self.shouldBeWarned() ? \"v-guhw-silWarn\" : \"\"}`,$3`${$4} ${$self.shouldBeWarned() ? \"v-guhw-silWarn\" : \"\"}`," // my gosh
             }
         },
         {
             find: "ChannelTextAreaForm",
             replacement: {
-                match: /(eN\.Ay,\s*\{.*?ref:)(.*?),/,
-                replace: "$1$self.giveChat($2),"
+                match: /(inputFormRef=)(.*?)\(\)/,
+                replace: "$1$self.giveChat($2())"
             }
         }
     ],

@@ -18,7 +18,6 @@
 
 import { definePluginSettings } from "@api/Settings";
 import { ForkDevs } from "@utils/constants";
-import { Logger } from "@utils/Logger";
 import definePlugin, { OptionType } from "@utils/types";
 
 const settings = definePluginSettings({
@@ -49,7 +48,7 @@ function ensureRules() {
     if (Date.now() - lastRuleUpdateTime > (10 * 60 * 1000) || !rules) {
         updateRules();
         return rules !== undefined;
-    };
+    }
     return true;
 }
 

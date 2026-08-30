@@ -159,10 +159,12 @@ export default definePlugin({
 
     handleKeyDown(e: KeyboardEvent) {
         if (e.altKey && e.key) {
+            console.log(e.altKey, e.key);
             const num = Number.parseInt(e.key) - 1;
             if (!(!isNaN(num) && num >= 0 && num <= lastEmoteList.length)) return;
 
             e.preventDefault();
+            console.log(currentChatBox, lastEmoteList[num]);
             currentChatBox?.current.querySelector("[role=\"textbox\"]")?.dispatchEvent(new InputEvent("beforeinput", {
                 bubbles: true,
                 cancelable: true,
@@ -197,8 +199,8 @@ export default definePlugin({
         {
             find: "ChannelTextAreaForm",
             replacement: {
-                match: /(eN\.Ay,\s*\{.*?ref:)(.*?),/,
-                replace: "$1$self.giveChat($2),"
+                match: /(inputFormRef=)(.*?)\(\)/,
+                replace: "$1$self.giveChat($2())"
             }
         }
     ],
