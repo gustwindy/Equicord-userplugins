@@ -87,6 +87,7 @@ function checkMessage(content: string) {
             audio.play();
         }
 
+        current?.classList.toggle("v-guhw-silWarn", false);
         return content;
     }
     if (messagesSinceEmote >= noEmoteThreshold) {
