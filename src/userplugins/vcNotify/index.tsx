@@ -159,7 +159,7 @@ export default definePlugin({
                         const name = settingNames[key].replaceAll(" ", "");
 
                         if (settings.store[`enableFor${name}`]) {
-                            compare(settings.store[`messageOn${name}`], settings.store[`messageOn${name}`], last[key], current[key], current.userId);
+                            compare(settings.store[`messageOn${name}`], settings.store[`messageOff${name}`], last[key], current[key], current.userId);
                         }
                     });
                 }
