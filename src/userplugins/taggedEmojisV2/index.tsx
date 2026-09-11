@@ -163,8 +163,8 @@ function EmojiDisplay() {
 }
 
 export default definePlugin({
-    name: "TaggedEmojis",
-    description: "An alternative to the emoji picker (with some non user-friendly UI.",
+    name: "TaggedEmojisV2",
+    description: "An alternative to the emoji picker. (with some non user-friendly UI)",
     dependencies: ["MessagePopoverAPI"],
     tags: ["Chat", "Utility"],
     authors: [ForkDevs.windy],
