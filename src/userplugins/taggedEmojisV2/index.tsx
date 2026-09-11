@@ -147,7 +147,7 @@ function EmojiDisplaySlot({
 }: { pasteText: string, index: number; }) {
     return <span className="v-guhw-emDisplaySlot">
         <span>{index}</span>
-        <img src={`https://cdn.discordapp.com/emojis/${pasteText.split(":")[2].split(">")[0]}.png?size=56`} />
+        <img alt={`${index}`} src={`https://cdn.discordapp.com/emojis/${pasteText.split(":")[2].split(">")[0]}.png?size=56`} />
     </span>;
 }
 
