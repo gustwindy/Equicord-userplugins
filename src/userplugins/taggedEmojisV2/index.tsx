@@ -41,7 +41,19 @@ const logger = new Logger("TaggedEmojis");
 
 let currentChatBox: React.RefObject<HTMLDivElement> | null = null;
 
-let taggedData: Map<string, Object> | undefined = undefined;
+interface Pastable {
+    text: string;
+    tags: Set<string>;
+}
+
+interface TaggedData {
+    tags: string[];
+    aliasToTag: Map<string, string>;
+    tagNames: Map<string, string[]>;
+    pastables: Pastable[];
+}
+
+let taggedData: TaggedData | undefined = undefined;
 let attempted: boolean = false;
 let lastDataUpdateTime: number = Date.now();
 let lastEmoteList: string[] = [];
@@ -50,16 +62,32 @@ let forceUpdate: (() => void) | undefined;
 function updateData() {
     if (attempted) return;
     attempted = true;
-    fetch(settings.store.emojiIndexUrl).then(v => {
-        v.json().then(data => {
-            taggedData = new Map(Object.entries(data));
+    fetch(settings.store.emojiIndexUrl)
+        .then(v => v.json())
+        .then(data => {
+            const aliases: Record<string, string[]> = data.aliases ?? {};
+
+            const tagNames = new Map<string, string[]>();
+            const aliasToTag = new Map<string, string>();
+            for (const tag of data.tags as string[]) {
+                const names = [tag, ...(aliases[tag] ?? [])];
+                tagNames.set(tag, names);
+                for (const name of names) aliasToTag.set(name.toLowerCase(), tag);
+            }
+
+            taggedData = {
+                tags: data.tags,
+                aliasToTag,
+                tagNames,
+                pastables: (data.pastables as Array<{ text: string; tags: string[]; }>).map(p => ({
+                    text: p.text,
+                    tags: new Set(p.tags)
+                }))
+            };
             lastDataUpdateTime = Date.now();
-        }).finally(() => {
-            attempted = false; // this shouldve been in the other plugin too
-        });
-    }).finally(() => {
-        attempted = false;
-    });
+        })
+        .catch(e => logger.error("Failed to fetch/parse emoji index", e))
+        .finally(() => { attempted = false; });
 }
 
 function ensureData() {
@@ -70,6 +98,10 @@ function ensureData() {
     return true;
 }
 
+function resolveTag(word: string): string | undefined {
+    return taggedData!.aliasToTag.get(word.toLowerCase());
+}
+
 function queryIn(text: string, n = 10) {
     if (!ensureData() || !taggedData) return [];
 
@@ -78,27 +110,30 @@ function queryIn(text: string, n = 10) {
 
     const lastWord = words[words.length - 1].toLowerCase();
     const lower = text.toLowerCase();
+
+    const lastTag = resolveTag(lastWord);
+    const wordTags = new Set(words.map(w => resolveTag(w)).filter((t): t is string => !!t));
+
     const scores = new Map<string, number>();
 
-    taggedData.forEach((tags, emoji) => {
+    for (const { text: pasteText, tags } of taggedData.pastables) {
         let score = 0;
 
-        for (const [tag, tagScore] of Object.entries(tags)) {
-            const lowerTag = tag.toLowerCase();
-
-            if (lowerTag === lastWord) {
-                score += tagScore * 2;
-            } else if (words.some(w => w.toLowerCase() === lowerTag)) {
-                score += tagScore;
-            } else if (lowerTag.includes(" ") && lower.includes(lowerTag)) {
-                score += tagScore;
+        for (const tag of tags) {
+            if (tag === lastTag) {
+                score += 2;
+            } else if (wordTags.has(tag)) {
+                score += 1;
+            } else {
+                const names = taggedData.tagNames.get(tag) ?? [tag];
+                if (names.some(name => name.includes(" ") && lower.includes(name.toLowerCase()))) {
+                    score += 1;
+                }
             }
         }
 
-        if (score > 0) {
-            scores.set(emoji, score);
-        }
-    });
+        if (score > 0) scores.set(pasteText, score);
+    }
 
     return [...scores.entries()]
         .sort((a, b) => b[1] - a[1])
