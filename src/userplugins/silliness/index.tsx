@@ -24,7 +24,6 @@ import ErrorBoundary from "@components/ErrorBoundary";
 import { ForkDevs } from "@utils/constants";
 import { Logger } from "@utils/Logger";
 import definePlugin, { OptionType } from "@utils/types";
-// import { useRef } from "@webpack/common";
 
 const settings = definePluginSettings({
     noEmoteThreshold: {
@@ -109,7 +108,7 @@ export default definePlugin({
 
     render() {
         return <ErrorBoundary>
-            <audio src={settings.store.audioUrl} ref={audioRef} />
+            <audio src={settings.store.audioUrl} ref={audioRef}/>
         </ErrorBoundary>;
     },
 

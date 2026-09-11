@@ -1,0 +1,42 @@
+.v-guhw-emDisplay {
+    padding: 0px 12px 0px 12px;
+    background-color: var(--chat-background);
+    border: var(--border-muted) solid 1px;
+    border-radius: 10px;
+    position: absolute;
+    right: 15px;
+    bottom: calc(100% + -10px);
+    color: var(--text-muted);
+    min-height: 22px;
+    height: max-content;
+    z-index: 2;
+    display: flex;
+    max-width: 100%;
+    flex-wrap: wrap;
+    font-size: 10px;
+    align-items: center;
+}
+
+.v-guhw-emDisplaySlot {
+    display: inline-flex;
+    width: max-content;
+    height: 24px;
+    margin: 2px;
+
+    span {
+        margin: 2px;
+        align-self: flex-end;
+        font-size: 7px;
+    }
+
+    img {
+        align-self: flex-start;
+        margin: 0px;
+        width: 20px;
+        height: 20px;
+    }
+}
+
+.cooldownWrapper_b21699 {
+    transform: translateY(-15px) translateX(-17px);
+}

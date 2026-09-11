@@ -1,0 +1,40 @@
+{
+  "description": "schema for tagged emojis",
+  "type": "object",
+  "properties": {
+    "tags": {
+      "type": "array",
+      "items": {
+        "required": [],
+        "properties": {}
+      }
+    },
+    "pastables": {
+      "type": "array",
+      "uniqueItems": true,
+      "minItems": 1,
+      "items": {
+        "required": [
+          "text","tags"
+        ],
+        "properties": {
+          "text": {
+            "type": "string",
+            "minLength": 1
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "required": [],
+              "properties": {}
+            }
+          }
+        }
+      }
+    }
+  },
+  "required": [
+    "tags",
+    "pastables"
+  ]
+}
