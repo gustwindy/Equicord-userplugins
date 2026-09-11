@@ -25,8 +25,10 @@
           "tags": {
             "type": "array",
             "items": {
-              "required": [],
-              "properties": {}
+              "type": "string",
+              "enum": {
+                  "$data": "2/tags"
+              }
             }
           }
         }
