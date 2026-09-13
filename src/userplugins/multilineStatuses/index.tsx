@@ -32,7 +32,7 @@ export default definePlugin({
     generatePreview(text: string) {
         const lines = text.split("\n")
 
-        const baseLength = text.replaceAll(" ", "").length
+        const baseLength = text.replaceAll("\n", "").length
         const newlineSpace = Math.max(lines.length-1, 1)
 
         const remaining = maxStatus - baseLength
